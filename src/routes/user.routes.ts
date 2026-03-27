@@ -1,9 +1,12 @@
 import { Router } from 'express';
-import { createReview, getReviewsByItem, deleteReview } from '../controllers/review.controller';
-import { authenticate } from '../middleware/auth.middleware';
+import { getAllUsers, getUserById, updateUser, deleteUser, updateUserRole } from '../controllers/user.controller';
+import { authenticate, authorize } from '../middleware/auth.middleware';
 
 const router = Router();
-router.post('/', authenticate, createReview);
-router.get('/item/:itemId', getReviewsByItem);
-router.delete('/:id', authenticate, deleteReview);
+router.use(authenticate);
+router.get('/', authorize('ADMIN'), getAllUsers);
+router.get('/:id', getUserById);
+router.patch('/role', authorize('ADMIN'), updateUserRole);
+router.patch('/:id', updateUser);
+router.delete('/:id', authorize('ADMIN'), deleteUser);
 export default router;
