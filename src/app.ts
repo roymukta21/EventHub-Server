@@ -25,7 +25,12 @@ app.use('/api/bookings', bookingRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/ai', aiRoutes);
 
-app.get('/health', (_req, res) => res.json({ success: true, message: 'Server is running' }));
-app.use(errorHandler);
+app.get('/', (_req, res) => {
+  res.send('EventHub Server is running 🚀');
+});
+
+app.get('/health', (_req, res) => {
+  res.json({ success: true, message: 'Server is healthy ✅' });
+});
 
 export default app;
